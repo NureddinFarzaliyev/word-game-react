@@ -1,0 +1,5 @@
+Primary Color: #04070b (Dark Blueish Black)
+Secondary Color: #16223a (Deep Navy Blue)
+Accent Color: #1f3d7a (Rich Blue)
+Background Color: #0a0e17 (Dark Slate Blue)
+Text Color: #f4f6fc (Light Grayish Blue)
