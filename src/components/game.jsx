@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { render } from 'react-dom'
+import React from 'react'
 
 const Game = ({ word }) => {
   console.log(word)
@@ -8,7 +7,7 @@ const Game = ({ word }) => {
 
   const [firstLetter, correctLetter1, correctLetter2, correctLetter3, lastLetter] = splittedWord;
 
-  let buttonLetters = [correctLetter1, correctLetter2, correctLetter3, getRandomLetter(), getRandomLetter(), getRandomLetter()]
+  let buttonLetters = [correctLetter1, correctLetter2, correctLetter3, getRandomLetter(), getRandomLetter(), getRandomLetter(), getRandomLetter(), getRandomLetter(), getRandomLetter()]
 
   // Shuffle array using Fisher-Yates algorithm
   const shuffledButtonLetters = shuffleArray(buttonLetters);
@@ -34,14 +33,15 @@ const Game = ({ word }) => {
     return array;
   }
 
+  const dash1 = document.querySelector('.dash-1')
+  const dash2 = document.querySelector('.dash-2')
+  const dash3 = document.querySelector('.dash-3')
+
   // function to check if it's right letter
   function checkLetter (buttonLetter) {
     const correctBtn1 = document.querySelector('.correct1')
     const correctBtn2 = document.querySelector('.correct2')
     const correctBtn3 = document.querySelector('.correct3')
-    const dash1 = document.querySelector('.dash-1')
-    const dash2 = document.querySelector('.dash-2')
-    const dash3 = document.querySelector('.dash-3')
 
     if(buttonLetter == correctLetter1){
       correctBtn1.classList.remove('hidden')
@@ -55,12 +55,27 @@ const Game = ({ word }) => {
       correctBtn3.classList.remove('hidden')
       dash3.classList.add('hidden')
     }
-    
+
+    checkDone();
+  }
+
+  // function to check if it's done
+  function checkDone () {
+    console.log('checked')
+    if(dash1.classList.contains('hidden') && dash2.classList.contains('hidden') && dash3.classList.contains('hidden')){
+      const nextBtn = document.querySelector('.nextBtn')
+      nextBtn.classList.remove('hidden')
+    }
+  }
+
+  // function to refresh the game
+  function refreshGame() {
+    window.location.reload();
   }
 
   return (
     <div className='text-3xl text-white rounded-lg p-4 h-[70vh] bg-primary w-[80vw] ml-[10vw] md:w-[60vw] md:ml-[20vw] lg:w-[50vw] lg:ml-[25vw] mt-14'>
-      <div>
+      <div className='text-7xl flex items-center justify-center py-8'>
         <span className='ml-1'>{firstLetter}</span>
         <span className='correct1 hidden ml-1'>{correctLetter1}</span>
         <span className='dash-1 ml-1' >_</span>
@@ -70,10 +85,13 @@ const Game = ({ word }) => {
         <span className='dash-3 ml-1' >_</span>
         <span className='ml-1'>{lastLetter}</span>
       </div>
-      <div>
-        {shuffledButtonLetters.map((element) => (
-          <button className='m-2 bg-slate-700' onClick={() => {checkLetter(element)}}>{element}</button>
+      <div className='grid grid-cols-3'>
+        {shuffledButtonLetters.map((element, index) => (
+          <button key={index} className='m-2 h-16 text-4xl bg-secondary hover:bg-accent transition rounded shadow-xl' onClick={() => {checkLetter(element)}}>{element}</button>
         ))}
+      </div>
+      <div className='flex justify-center'>
+        <button onClick={refreshGame} className='bg-green-700 hidden px-20 py-3 mt-7 nextBtn rounded hover:bg-accent transition'>NEXT</button>
       </div>
     </div>
   )

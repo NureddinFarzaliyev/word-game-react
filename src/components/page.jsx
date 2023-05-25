@@ -48,7 +48,7 @@ const Page = () => {
     
 
   return (    
-    <div className='text-white'>
+    <div className='text-white shadow-2xl'>
         <Header/>
         <Game word={randomWord} />
     </div>
